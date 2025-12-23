@@ -1,7 +1,7 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'EZ Store',
+  title: 'Good Stuffs',
   description: 'A simple template with App Router, MongoDB, and shadcn/ui',
 }
 
