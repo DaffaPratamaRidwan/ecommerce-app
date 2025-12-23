@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { NextResponse } from 'next/server';
 
-const MONGO_URL = process.env.MONGO_URL;
-const DB_NAME = process.env.DB_NAME || 'ecommerce_store';
+const MONGO_URL = process.env.MONGODB_URI || 'mongodb+srv://raiginsknight_db_user:Daffa12345678@e-commerce.7grouqd.mongodb.net/?appName=e-commerce';
+const DB_NAME = process.env.MONGODB_DB || 'e-commerce';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key';
 
 let cachedClient = null;
