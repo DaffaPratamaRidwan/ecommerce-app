@@ -277,55 +277,65 @@ export default function App() {
   const categories = ['All', ...new Set(products.map(p => p.category))];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
       <Toaster />
       
       {/* Header */}
-      <header className="bg-white shadow-md sticky top-0 z-50">
+      <header className="bg-white/80 backdrop-blur-lg shadow-lg sticky top-0 z-50 border-b border-gray-100">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div 
-              className="flex items-center space-x-2 cursor-pointer"
+              className="flex items-center space-x-3 cursor-pointer group"
               onClick={() => setCurrentView('products')}
             >
-              <ShoppingBag className="h-8 w-8 text-blue-600" />
-              <h1 className="text-2xl font-bold text-gray-900">Good Stuffs</h1>
+              <div className="relative">
+                <ShoppingBag className="h-9 w-9 text-indigo-600 group-hover:text-indigo-700 transition-colors" />
+                <div className="absolute -inset-1 bg-indigo-600/20 rounded-lg blur-sm group-hover:bg-indigo-600/30 transition-colors"></div>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Good Stuffs</h1>
+                <p className="text-xs text-gray-500">Premium Shopping Experience</p>
+              </div>
             </div>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
               {user ? (
                 <>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setCurrentView('orders')}
+                    className="text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all"
                   >
                     My Orders
                   </Button>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="relative"
+                    className="relative hover:bg-indigo-50 transition-all"
                     onClick={() => setCurrentView('cart')}
                   >
-                    <ShoppingCart className="h-5 w-5" />
+                    <ShoppingCart className="h-5 w-5 text-gray-600 group-hover:text-indigo-600" />
                     {cart.items.length > 0 && (
-                      <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center">
+                      <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-0">
                         {cart.items.length}
                       </Badge>
                     )}
                   </Button>
-                  <div className="flex items-center space-x-2">
-                    <User className="h-5 w-5" />
-                    <span className="text-sm font-medium">{user.name}</span>
+                  <div className="flex items-center space-x-2 px-3 py-2 bg-gray-50 rounded-full">
+                    <User className="h-4 w-4 text-gray-600" />
+                    <span className="text-sm font-medium text-gray-700">{user.name}</span>
                   </div>
-                  <Button variant="outline" size="sm" onClick={handleLogout}>
+                  <Button variant="outline" size="sm" onClick={handleLogout} className="border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
                     <LogOut className="h-4 w-4 mr-2" />
                     Logout
                   </Button>
                 </>
               ) : (
-                <Button onClick={() => { setAuthMode('login'); setShowAuthDialog(true); }}>
+                <Button 
+                  onClick={() => { setAuthMode('login'); setShowAuthDialog(true); }}
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all"
+                >
                   Login / Register
                 </Button>
               )}
@@ -339,26 +349,28 @@ export default function App() {
         {currentView === 'products' && (
           <div>
             {/* Search and Filter */}
-            <div className="mb-8 space-y-4">
-              <div className="flex gap-4">
-                <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                  <Input
-                    type="text"
-                    placeholder="Search products..."
-                    className="pl-10"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
+            <div className="mb-8 space-y-6">
+              <div className="relative max-w-2xl mx-auto">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder="Search for amazing products..."
+                  className="pl-12 py-4 text-lg border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 rounded-full shadow-sm"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
               </div>
               
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-3 flex-wrap justify-center">
                 {categories.map(category => (
                   <Badge
                     key={category}
                     variant={selectedCategory === category ? 'default' : 'outline'}
-                    className="cursor-pointer px-4 py-2"
+                    className={`cursor-pointer px-5 py-2 text-sm font-medium transition-all ${
+                      selectedCategory === category 
+                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-0 shadow-md' 
+                        : 'border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 text-black'
+                    }`}
                     onClick={() => setSelectedCategory(category)}
                   >
                     {category}
@@ -368,31 +380,44 @@ export default function App() {
             </div>
 
             {/* Products Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredProducts.map(product => (
-                <Card key={product.id} className="hover:shadow-lg transition-shadow cursor-pointer">
+                <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-gray-100 hover:border-indigo-200 overflow-hidden">
                   <div onClick={() => { setSelectedProduct(product); setCurrentView('product-detail'); }}>
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-48 object-cover rounded-t-lg"
-                    />
-                    <CardHeader>
-                      <CardTitle className="text-lg line-clamp-1">{product.name}</CardTitle>
-                      <CardDescription className="line-clamp-2">{product.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold text-blue-600">${product.price}</span>
-                        <Badge variant="secondary">{product.category}</Badge>
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute top-3 right-3">
+                        <Badge className="bg-white/90 text-gray-700 border-0 shadow-sm">
+                          {product.category}
+                        </Badge>
                       </div>
-                      <div className="mt-2 text-sm text-gray-600">
-                        Stock: {product.stock} | Rating: {product.rating}⭐
+                    </div>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg line-clamp-1 group-hover:text-indigo-600 transition-colors">{product.name}</CardTitle>
+                      <CardDescription className="line-clamp-2 text-white">{product.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">${product.price}</span>
+                        <div className="flex items-center space-x-1">
+                          <span className="text-yellow-500">⭐</span>
+                          <span className="text-sm text-white">{product.rating}</span>
+                        </div>
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        Stock: <span className={`font-medium ${product.stock < 10 ? 'text-red-500' : 'text-green-500'}`}>{product.stock}</span> units
                       </div>
                     </CardContent>
                   </div>
-                  <CardFooter>
-                    <Button className="w-full" onClick={() => addToCart(product)}>
+                  <CardFooter className="pt-0">
+                    <Button 
+                      className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all" 
+                      onClick={() => addToCart(product)}
+                    >
                       <ShoppingCart className="mr-2 h-4 w-4" />
                       Add to Cart
                     </Button>
@@ -405,33 +430,65 @@ export default function App() {
 
         {currentView === 'product-detail' && selectedProduct && (
           <div className="max-w-6xl mx-auto">
-            <Button variant="outline" className="mb-4" onClick={() => setCurrentView('products')}>
+            <Button 
+              variant="outline" 
+              className="mb-6 border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all" 
+              onClick={() => setCurrentView('products')}
+            >
               ← Back to Products
             </Button>
-            <Card>
-              <div className="grid md:grid-cols-2 gap-8 p-6">
+            <Card className="overflow-hidden border-gray-100 shadow-lg">
+              <div className="grid md:grid-cols-2 gap-8 p-8">
                 <div>
-                  <img
-                    src={selectedProduct.image}
-                    alt={selectedProduct.name}
-                    className="w-full h-96 object-cover rounded-lg"
-                  />
-                </div>
-                <div>
-                  <h1 className="text-3xl font-bold mb-4">{selectedProduct.name}</h1>
-                  <Badge className="mb-4">{selectedProduct.category}</Badge>
-                  <p className="text-gray-600 mb-6">{selectedProduct.description}</p>
-                  <div className="mb-6">
-                    <div className="text-4xl font-bold text-blue-600 mb-2">${selectedProduct.price}</div>
-                    <div className="text-sm text-gray-600">
-                      Stock: {selectedProduct.stock} units available
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      Rating: {selectedProduct.rating}⭐
+                  <div className="relative overflow-hidden rounded-lg">
+                    <img
+                      src={selectedProduct.image}
+                      alt={selectedProduct.name}
+                      className="w-full h-96 object-cover"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <Badge className="bg-white/90 text-gray-700 border-0 shadow-sm">
+                        {selectedProduct.category}
+                      </Badge>
                     </div>
                   </div>
-                  <Button size="lg" className="w-full" onClick={() => addToCart(selectedProduct)}>
-                    <ShoppingCart className="mr-2 h-5 w-5" />
+                </div>
+                <div className="space-y-6">
+                  <div>
+                    <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">{selectedProduct.name}</h1>
+                    <div className="flex items-center space-x-4 mb-4">
+                      <div className="flex items-center space-x-1">
+                        <span className="text-yellow-500 text-lg">⭐</span>
+                        <span className="text-lg font-semibold text-white">{selectedProduct.rating}</span>
+                      </div>
+                      <span className="text-gray-400">|</span>
+                      <span className="text-white">{selectedProduct.category}</span>
+                    </div>
+                    <p className="text-white text-lg leading-relaxed">{selectedProduct.description}</p>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-baseline space-x-2">
+                      <span className="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">${selectedProduct.price}</span>
+                      <span className="text-gray-500">USD</span>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between py-2 border-b border-gray-100">
+                        <span className="text-white">Stock Availability</span>
+                        <span className={`font-semibold ${selectedProduct.stock < 10 ? 'text-red-500' : 'text-green-500'}`}>
+                          {selectedProduct.stock < 10 ? `Only ${selectedProduct.stock} left!` : `${selectedProduct.stock} units available`}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    size="lg" 
+                    className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all text-lg py-6" 
+                    onClick={() => addToCart(selectedProduct)}
+                  >
+                    <ShoppingCart className="mr-3 h-6 w-6" />
                     Add to Cart
                   </Button>
                 </div>
@@ -442,53 +499,69 @@ export default function App() {
 
         {currentView === 'cart' && (
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6">Shopping Cart</h2>
+            <div className="mb-8">
+              <h2 className="text-4xl font-bold mb-2 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Shopping Cart</h2>
+              <p className="text-gray-600">Review your items before checkout</p>
+            </div>
             {cart.items.length === 0 ? (
-              <Card>
-                <CardContent className="p-12 text-center">
-                  <ShoppingCart className="h-16 w-16 mx-auto text-gray-400 mb-4" />
-                  <p className="text-xl text-gray-600 mb-4">Your cart is empty</p>
-                  <Button onClick={() => setCurrentView('products')}>Continue Shopping</Button>
+              <Card className="border-gray-100 shadow-sm">
+                <CardContent className="p-16 text-center">
+                  <div className="relative inline-block mb-6">
+                    <ShoppingCart className="h-20 w-20 mx-auto text-gray-300" />
+                    <div className="absolute -inset-2 bg-gray-100 rounded-full blur-xl"></div>
+                  </div>
+                  <h3 className="text-2xl font-semibold text-gray-700 mb-3">Your cart is empty</h3>
+                  <p className="text-gray-500 mb-6">Add some amazing products to get started!</p>
+                  <Button 
+                    onClick={() => setCurrentView('products')}
+                    className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all"
+                  >
+                    Continue Shopping
+                  </Button>
                 </CardContent>
               </Card>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {cart.items.map(item => (
-                  <Card key={item.productId}>
+                  <Card key={item.productId} className="border-gray-100 shadow-sm hover:shadow-md transition-shadow">
                     <CardContent className="p-6">
-                      <div className="flex items-center gap-4">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="w-24 h-24 object-cover rounded"
-                        />
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-lg">{item.name}</h3>
-                          <p className="text-blue-600 font-bold">${item.price}</p>
+                      <div className="flex items-center gap-6">
+                        <div className="relative overflow-hidden rounded-lg">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-28 h-28 object-cover"
+                          />
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-xl mb-1">{item.name}</h3>
+                          <p className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">${item.price}</p>
+                        </div>
+                        <div className="flex items-center gap-3">
                           <Button
                             variant="outline"
                             size="icon"
+                            className="border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all"
                             onClick={() => updateCartQuantity(item.productId, item.quantity - 1)}
                           >
                             <Minus className="h-4 w-4" />
                           </Button>
-                          <span className="w-12 text-center font-semibold">{item.quantity}</span>
+                          <span className="w-16 text-center font-semibold text-lg">{item.quantity}</span>
                           <Button
                             variant="outline"
                             size="icon"
+                            className="border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all"
                             onClick={() => updateCartQuantity(item.productId, item.quantity + 1)}
                           >
                             <Plus className="h-4 w-4" />
                           </Button>
                         </div>
                         <div className="text-right">
-                          <p className="font-bold text-lg">${(item.price * item.quantity).toFixed(2)}</p>
+                          <p className="font-bold text-2xl mb-2">${(item.price * item.quantity).toFixed(2)}</p>
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="text-red-600"
+                            className="text-red-500 hover:text-red-600 hover:bg-red-50 transition-all"
                             onClick={() => removeFromCart(item.productId)}
                           >
                             <Trash2 className="h-4 w-4 mr-1" />
@@ -500,17 +573,24 @@ export default function App() {
                   </Card>
                 ))}
                 
-                <Card>
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-xl font-semibold">Total:</span>
-                      <span className="text-3xl font-bold text-blue-600">${cart.total.toFixed(2)}</span>
+                <Card className="border-gray-100 shadow-lg">
+                  <CardContent className="p-8">
+                    <div className="flex justify-between items-center mb-6">
+                      <span className="text-2xl font-semibold">Total Amount:</span>
+                      <span className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">${cart.total.toFixed(2)}</span>
                     </div>
                     <div className="flex gap-4">
-                      <Button variant="outline" className="flex-1" onClick={() => setCurrentView('products')}>
+                      <Button 
+                        variant="outline" 
+                        className="flex-1 border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all text-lg py-3" 
+                        onClick={() => setCurrentView('products')}
+                      >
                         Continue Shopping
                       </Button>
-                      <Button className="flex-1" onClick={() => setShowCheckoutDialog(true)}>
+                      <Button 
+                        className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all text-lg py-3" 
+                        onClick={() => setShowCheckoutDialog(true)}
+                      >
                         Proceed to Checkout
                       </Button>
                     </div>
@@ -523,45 +603,75 @@ export default function App() {
 
         {currentView === 'orders' && (
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6">My Orders</h2>
+            <div className="mb-8">
+              <h2 className="text-4xl font-bold mb-2 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">My Orders</h2>
+              <p className="text-gray-600">Track your order history and status</p>
+            </div>
             {orders.length === 0 ? (
-              <Card>
-                <CardContent className="p-12 text-center">
-                  <ShoppingBag className="h-16 w-16 mx-auto text-gray-400 mb-4" />
-                  <p className="text-xl text-gray-600 mb-4">No orders yet</p>
-                  <Button onClick={() => setCurrentView('products')}>Start Shopping</Button>
+              <Card className="border-gray-100 shadow-sm">
+                <CardContent className="p-16 text-center">
+                  <div className="relative inline-block mb-6">
+                    <ShoppingBag className="h-20 w-20 mx-auto text-gray-300" />
+                    <div className="absolute -inset-2 bg-gray-100 rounded-full blur-xl"></div>
+                  </div>
+                  <h3 className="text-2xl font-semibold text-gray-700 mb-3">No orders yet</h3>
+                  <p className="text-gray-500 mb-6">Start shopping to see your order history!</p>
+                  <Button 
+                    onClick={() => setCurrentView('products')}
+                    className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all"
+                  >
+                    Start Shopping
+                  </Button>
                 </CardContent>
               </Card>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {orders.map(order => (
-                  <Card key={order.id}>
-                    <CardHeader>
+                  <Card key={order.id} className="border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <CardHeader className="pb-4">
                       <div className="flex justify-between items-start">
                         <div>
-                          <CardTitle>Order #{order.id.substring(0, 8)}</CardTitle>
-                          <CardDescription>
-                            {new Date(order.createdAt).toLocaleDateString()}
+                          <CardTitle className="text-xl mb-1">Order #{order.id.substring(0, 8)}</CardTitle>
+                          <CardDescription className="text-gray-500">
+                            {new Date(order.createdAt).toLocaleDateString('en-US', { 
+                              year: 'numeric', 
+                              month: 'long', 
+                              day: 'numeric' 
+                            })}
                           </CardDescription>
                         </div>
-                        <Badge>{order.status}</Badge>
+                        <Badge className={`px-3 py-1 ${
+                          order.status === 'Delivered' ? 'bg-green-100 text-green-700 border-0' :
+                          order.status === 'Processing' ? 'bg-blue-100 text-blue-700 border-0' :
+                          order.status === 'Shipped' ? 'bg-purple-100 text-purple-700 border-0' :
+                          'bg-gray-100 text-gray-700 border-0'
+                        }`}>
+                          {order.status}
+                        </Badge>
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                         {order.items.map((item, idx) => (
-                          <div key={idx} className="flex justify-between text-sm">
-                            <span>{item.name} x {item.quantity}</span>
-                            <span className="font-semibold">${(item.price * item.quantity).toFixed(2)}</span>
+                          <div key={idx} className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
+                            <div>
+                              <span className="font-medium">{item.name}</span>
+                              <span className="text-gray-500 ml-2">x {item.quantity}</span>
+                            </div>
+                            <span className="font-semibold text-lg">${(item.price * item.quantity).toFixed(2)}</span>
                           </div>
                         ))}
-                        <Separator className="my-2" />
-                        <div className="flex justify-between font-bold">
-                          <span>Total:</span>
-                          <span className="text-blue-600">${order.total.toFixed(2)}</span>
+                        <div className="pt-3 mt-3 border-t border-gray-200">
+                          <div className="flex justify-between items-center">
+                            <span className="text-xl font-semibold">Total:</span>
+                            <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">${order.total.toFixed(2)}</span>
+                          </div>
                         </div>
-                        <div className="text-sm text-gray-600 mt-2">
-                          <strong>Shipping Address:</strong> {order.shippingAddress}
+                        <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                          <div className="text-sm text-gray-600">
+                            <span className="font-semibold">Shipping Address:</span>
+                            <div className="mt-1">{order.shippingAddress}</div>
+                          </div>
                         </div>
                       </div>
                     </CardContent>
@@ -575,81 +685,101 @@ export default function App() {
 
       {/* Auth Dialog */}
       <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>{authMode === 'login' ? 'Login' : 'Register'}</DialogTitle>
-            <DialogDescription>
-              {authMode === 'login' ? 'Login to your account' : 'Create a new account'}
+        <DialogContent className="sm:max-w-md border-gray-100 shadow-xl">
+          <DialogHeader className="pb-4">
+            <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              {authMode === 'login' ? 'Welcome Back' : 'Create Account'}
+            </DialogTitle>
+            <DialogDescription className="text-gray-600">
+              {authMode === 'login' ? 'Login to access your account' : 'Join us for a premium shopping experience'}
             </DialogDescription>
           </DialogHeader>
           
-          <Tabs value={authMode} onValueChange={setAuthMode}>
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="register">Register</TabsTrigger>
+          <Tabs value={authMode} onValueChange={setAuthMode} className="mt-4">
+            <TabsList className="grid w-full grid-cols-2 bg-gray-100">
+              <TabsTrigger value="login" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">Login</TabsTrigger>
+              <TabsTrigger value="register" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">Register</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="login">
-              <form onSubmit={handleLogin} className="space-y-4">
+            <TabsContent value="login" className="mt-6">
+              <form onSubmit={handleLogin} className="space-y-5">
                 <div>
-                  <Label htmlFor="login-email">Email</Label>
+                  <Label htmlFor="login-email" className="text-sm font-medium text-gray-700">Email</Label>
                   <Input
                     id="login-email"
                     type="email"
                     value={loginForm.email}
                     onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
                     required
+                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                    placeholder="Enter your email"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="login-password">Password</Label>
+                  <Label htmlFor="login-password" className="text-sm font-medium text-gray-700">Password</Label>
                   <Input
                     id="login-password"
                     type="password"
                     value={loginForm.password}
                     onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
                     required
+                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                    placeholder="Enter your password"
                   />
                 </div>
-                <Button type="submit" className="w-full" disabled={loading}>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all py-3" 
+                  disabled={loading}
+                >
                   {loading ? 'Logging in...' : 'Login'}
                 </Button>
               </form>
             </TabsContent>
             
-            <TabsContent value="register">
-              <form onSubmit={handleRegister} className="space-y-4">
+            <TabsContent value="register" className="mt-6">
+              <form onSubmit={handleRegister} className="space-y-5">
                 <div>
-                  <Label htmlFor="register-name">Name</Label>
+                  <Label htmlFor="register-name" className="text-sm font-medium text-gray-700">Name</Label>
                   <Input
                     id="register-name"
                     type="text"
                     value={registerForm.name}
                     onChange={(e) => setRegisterForm({ ...registerForm, name: e.target.value })}
                     required
+                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                    placeholder="Enter your name"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="register-email">Email</Label>
+                  <Label htmlFor="register-email" className="text-sm font-medium text-gray-700">Email</Label>
                   <Input
                     id="register-email"
                     type="email"
                     value={registerForm.email}
                     onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
                     required
+                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                    placeholder="Enter your email"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="register-password">Password</Label>
+                  <Label htmlFor="register-password" className="text-sm font-medium text-gray-700">Password</Label>
                   <Input
                     id="register-password"
                     type="password"
                     value={registerForm.password}
                     onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
                     required
+                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                    placeholder="Create a password"
                   />
                 </div>
-                <Button type="submit" className="w-full" disabled={loading}>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all py-3" 
+                  disabled={loading}
+                >
                   {loading ? 'Registering...' : 'Register'}
                 </Button>
               </form>
@@ -660,53 +790,56 @@ export default function App() {
 
       {/* Checkout Dialog */}
       <Dialog open={showCheckoutDialog} onOpenChange={setShowCheckoutDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Checkout</DialogTitle>
-            <DialogDescription>Complete your order</DialogDescription>
+        <DialogContent className="sm:max-w-lg border-gray-100 shadow-xl">
+          <DialogHeader className="pb-4">
+            <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Checkout</DialogTitle>
+            <DialogDescription className="text-gray-600">Complete your order details</DialogDescription>
           </DialogHeader>
           
-          <form onSubmit={handleCheckout} className="space-y-4">
+          <form onSubmit={handleCheckout} className="space-y-5 mt-4">
             <div>
-              <Label htmlFor="address">Address</Label>
+              <Label htmlFor="address" className="text-sm font-medium text-gray-700">Street Address</Label>
               <Input
                 id="address"
                 value={checkoutForm.address}
                 onChange={(e) => setCheckoutForm({ ...checkoutForm, address: e.target.value })}
                 required
-                placeholder="123 Main St"
+                placeholder="123 Main Street"
+                className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="city">City</Label>
+                <Label htmlFor="city" className="text-sm font-medium text-gray-700">City</Label>
                 <Input
                   id="city"
                   value={checkoutForm.city}
                   onChange={(e) => setCheckoutForm({ ...checkoutForm, city: e.target.value })}
                   required
                   placeholder="New York"
+                  className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
                 />
               </div>
               <div>
-                <Label htmlFor="zipCode">Zip Code</Label>
+                <Label htmlFor="zipCode" className="text-sm font-medium text-gray-700">Zip Code</Label>
                 <Input
                   id="zipCode"
                   value={checkoutForm.zipCode}
                   onChange={(e) => setCheckoutForm({ ...checkoutForm, zipCode: e.target.value })}
                   required
                   placeholder="10001"
+                  className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
                 />
               </div>
             </div>
             <div>
-              <Label htmlFor="paymentMethod">Payment Method</Label>
+              <Label htmlFor="paymentMethod" className="text-sm font-medium text-gray-700">Payment Method</Label>
               <Select 
                 value={checkoutForm.paymentMethod} 
                 onValueChange={(value) => setCheckoutForm({ ...checkoutForm, paymentMethod: value })}
               >
-                <SelectTrigger>
-                  <SelectValue />
+                <SelectTrigger className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500">
+                  <SelectValue placeholder="Select payment method" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="credit-card">Credit Card</SelectItem>
@@ -717,14 +850,20 @@ export default function App() {
               </Select>
             </div>
             
-            <Separator />
+            <Separator className="my-6" />
             
-            <div className="flex justify-between items-center">
-              <span className="font-semibold">Total Amount:</span>
-              <span className="text-2xl font-bold text-blue-600">${cart.total.toFixed(2)}</span>
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="flex justify-between items-center">
+                <span className="text-lg font-semibold text-gray-700">Total Amount:</span>
+                <span className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">${cart.total.toFixed(2)}</span>
+              </div>
             </div>
             
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button 
+              type="submit" 
+              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all py-3 text-lg" 
+              disabled={loading}
+            >
               {loading ? 'Placing Order...' : 'Place Order'}
             </Button>
           </form>

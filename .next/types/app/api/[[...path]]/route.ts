@@ -1,4 +1,4 @@
-// File: C:\Users\daffa\ecommerce-app\app\api\[[...path]]\route.js
+// File: C:\Users\daffa\ecommerce-production\app\api\[[...path]]\route.js
 import * as entry from '../../../../../app/api/[[...path]]/route.js'
 import type { NextRequest } from 'next/server.js'
 
