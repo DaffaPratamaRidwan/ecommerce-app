@@ -521,7 +521,7 @@ export default function App() {
             ) : (
               <div className="space-y-6">
                 {cart.items.map(item => (
-                  <Card key={item.productId} className="border-gray-100 shadow-sm hover:shadow-md transition-shadow bg-gradient-to-br from-indigo-100 to-purple-100">
+                  <Card key={item.productId} className="overflow-hidden border-gray-100 shadow-lg bg-gradient-to-br from-indigo-200 to-purple-600">
                     <CardContent className="p-6">
                       <div className="flex items-center gap-6">
                         <div className="relative overflow-hidden rounded-lg">
@@ -533,33 +533,32 @@ export default function App() {
                         </div>
                         <div className="flex-1">
                           <h3 className="font-semibold text-xl mb-1">{item.name}</h3>
-                          <p className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">${item.price}</p>
+                          <p className="text-2xl font-bold text-white">${item.price}</p>
                         </div>
                         <div className="flex items-center gap-3">
                           <Button
                             variant="outline"
                             size="icon"
-                            className="border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all"
+                            className="border-gray-300 bg-white hover:border-gray-400 hover:bg-gray-50 transition-all"
                             onClick={() => updateCartQuantity(item.productId, item.quantity - 1)}
                           >
-                            <Minus className="h-4 w-4" />
+                            <Minus className="h-4 w-4 text-black" />
                           </Button>
                           <span className="w-16 text-center font-semibold text-lg">{item.quantity}</span>
                           <Button
                             variant="outline"
                             size="icon"
-                            className="border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all"
+                            className="border-gray-300 bg-white hover:border-gray-400 hover:bg-gray-50 transition-all"
                             onClick={() => updateCartQuantity(item.productId, item.quantity + 1)}
                           >
-                            <Plus className="h-4 w-4" />
+                            <Plus className="h-4 w-4 text-black" />
                           </Button>
                         </div>
                         <div className="text-right">
-                          <p className="font-bold text-2xl mb-2">${(item.price * item.quantity).toFixed(2)}</p>
+                          <p className="font-bold text-2xl mb-2 text-white">${(item.price * item.quantity).toFixed(2)}</p>
                           <Button
                             variant="ghost"
-                            size="sm"
-                            className="text-red-500 hover:text-red-600 hover:bg-red-50 transition-all"
+                            className="text-red-500 hover:text-red-600 hover:bg-red-50 transition-all px-3 py-2"
                             onClick={() => removeFromCart(item.productId)}
                           >
                             <Trash2 className="h-4 w-4 mr-1" />
@@ -571,16 +570,15 @@ export default function App() {
                   </Card>
                 ))}
                 
-                <Card className="border-gray-100 shadow-lg bg-gray-200">
+                <Card className="border-gray-100 shadow-lg bg-gradient-to-br from-indigo-200 to-purple-600">
                   <CardContent className="p-8">
                     <div className="flex justify-between items-center mb-6">
-                      <span className="text-2xl font-semibold">Total Amount:</span>
-                      <span className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">${cart.total.toFixed(2)}</span>
+                      <span className="text-2xl font-semibold text-white">Total Amount:</span>
+                      <span className="text-4xl font-bold text-white">${cart.total.toFixed(2)}</span>
                     </div>
                     <div className="flex gap-4">
                       <Button 
-                        variant="outline" 
-                        className="flex-1 border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all text-lg py-3" 
+                        className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all text-lg py-3" 
                         onClick={() => setCurrentView('products')}
                       >
                         Continue Shopping
