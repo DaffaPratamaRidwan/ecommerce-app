@@ -685,7 +685,7 @@ export default function App() {
 
       {/* Auth Dialog */}
       <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
-        <DialogContent className="sm:max-w-md border-gray-100 shadow-xl">
+        <DialogContent className="sm:max-w-md border-gray-100 shadow-xl bg-white">
           <DialogHeader className="pb-4">
             <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               {authMode === 'login' ? 'Welcome Back' : 'Create Account'}
@@ -697,33 +697,33 @@ export default function App() {
           
           <Tabs value={authMode} onValueChange={setAuthMode} className="mt-4">
             <TabsList className="grid w-full grid-cols-2 bg-gray-100">
-              <TabsTrigger value="login" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">Login</TabsTrigger>
-              <TabsTrigger value="register" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">Register</TabsTrigger>
+              <TabsTrigger value="login" className="text-black hover:text-black data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-black">Login</TabsTrigger>
+              <TabsTrigger value="register" className="text-black hover:text-black data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-black">Register</TabsTrigger>
             </TabsList>
             
             <TabsContent value="login" className="mt-6">
               <form onSubmit={handleLogin} className="space-y-5">
                 <div>
-                  <Label htmlFor="login-email" className="text-sm font-medium text-gray-700">Email</Label>
+                  <Label htmlFor="login-email" className="text-sm font-medium text-black">Email</Label>
                   <Input
                     id="login-email"
                     type="email"
                     value={loginForm.email}
                     onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
                     required
-                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 text-black"
                     placeholder="Enter your email"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="login-password" className="text-sm font-medium text-gray-700">Password</Label>
+                  <Label htmlFor="login-password" className="text-sm font-medium text-black">Password</Label>
                   <Input
                     id="login-password"
                     type="password"
                     value={loginForm.password}
                     onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
                     required
-                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 text-black"
                     placeholder="Enter your password"
                   />
                 </div>
@@ -732,7 +732,14 @@ export default function App() {
                   className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all py-3" 
                   disabled={loading}
                 >
-                  {loading ? 'Logging in...' : 'Login'}
+                  {loading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Logging in...
+                    </>
+                  ) : (
+                    'Login'
+                  )}
                 </Button>
               </form>
             </TabsContent>
@@ -740,38 +747,38 @@ export default function App() {
             <TabsContent value="register" className="mt-6">
               <form onSubmit={handleRegister} className="space-y-5">
                 <div>
-                  <Label htmlFor="register-name" className="text-sm font-medium text-gray-700">Name</Label>
+                  <Label htmlFor="register-name" className="text-sm font-medium text-black">Name</Label>
                   <Input
                     id="register-name"
                     type="text"
                     value={registerForm.name}
                     onChange={(e) => setRegisterForm({ ...registerForm, name: e.target.value })}
                     required
-                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 text-black"
                     placeholder="Enter your name"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="register-email" className="text-sm font-medium text-gray-700">Email</Label>
+                  <Label htmlFor="register-email" className="text-sm font-medium text-black">Email</Label>
                   <Input
                     id="register-email"
                     type="email"
                     value={registerForm.email}
                     onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
                     required
-                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 text-black"
                     placeholder="Enter your email"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="register-password" className="text-sm font-medium text-gray-700">Password</Label>
+                  <Label htmlFor="register-password" className="text-sm font-medium text-black">Password</Label>
                   <Input
                     id="register-password"
                     type="password"
                     value={registerForm.password}
                     onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
                     required
-                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                    className="mt-1 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 text-black"
                     placeholder="Create a password"
                   />
                 </div>
@@ -780,7 +787,14 @@ export default function App() {
                   className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all py-3" 
                   disabled={loading}
                 >
-                  {loading ? 'Registering...' : 'Register'}
+                  {loading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Registering...
+                    </>
+                  ) : (
+                    'Register'
+                  )}
                 </Button>
               </form>
             </TabsContent>
