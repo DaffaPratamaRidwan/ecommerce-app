@@ -437,7 +437,7 @@ export default function App() {
             >
               ← Back to Products
             </Button>
-            <Card className="overflow-hidden border-gray-100 shadow-lg">
+            <Card className="overflow-hidden border-gray-100 shadow-lg bg-gradient-to-br from-indigo-200 to-purple-600">
               <div className="grid md:grid-cols-2 gap-8 p-8">
                 <div>
                   <div className="relative overflow-hidden rounded-lg">
@@ -455,7 +455,7 @@ export default function App() {
                 </div>
                 <div className="space-y-6">
                   <div>
-                    <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">{selectedProduct.name}</h1>
+                    <h1 className="text-4xl font-bold mb-4 text-white">{selectedProduct.name}</h1>
                     <div className="flex items-center space-x-4 mb-4">
                       <div className="flex items-center space-x-1">
                         <span className="text-yellow-500 text-lg">⭐</span>
@@ -469,8 +469,8 @@ export default function App() {
                   
                   <div className="space-y-4">
                     <div className="flex items-baseline space-x-2">
-                      <span className="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">${selectedProduct.price}</span>
-                      <span className="text-gray-500">USD</span>
+                      <span className="text-5xl font-bold text-white">${selectedProduct.price}</span>
+                      <span className="text-white">USD</span>
                     </div>
                     
                     <div className="space-y-2">
@@ -504,11 +504,10 @@ export default function App() {
               <p className="text-gray-600">Review your items before checkout</p>
             </div>
             {cart.items.length === 0 ? (
-              <Card className="border-gray-100 shadow-sm">
+              <Card className="border-gray-100 shadow-sm bg-gray-200">
                 <CardContent className="p-16 text-center">
                   <div className="relative inline-block mb-6">
-                    <ShoppingCart className="h-20 w-20 mx-auto text-gray-300" />
-                    <div className="absolute -inset-2 bg-gray-100 rounded-full blur-xl"></div>
+                    <ShoppingCart className="h-20 w-20 mx-auto text-indigo-600" />
                   </div>
                   <h3 className="text-2xl font-semibold text-gray-700 mb-3">Your cart is empty</h3>
                   <p className="text-gray-500 mb-6">Add some amazing products to get started!</p>
@@ -523,7 +522,7 @@ export default function App() {
             ) : (
               <div className="space-y-6">
                 {cart.items.map(item => (
-                  <Card key={item.productId} className="border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                  <Card key={item.productId} className="border-gray-100 shadow-sm hover:shadow-md transition-shadow bg-gradient-to-br from-indigo-100 to-purple-100">
                     <CardContent className="p-6">
                       <div className="flex items-center gap-6">
                         <div className="relative overflow-hidden rounded-lg">
@@ -573,7 +572,7 @@ export default function App() {
                   </Card>
                 ))}
                 
-                <Card className="border-gray-100 shadow-lg">
+                <Card className="border-gray-100 shadow-lg bg-gray-200">
                   <CardContent className="p-8">
                     <div className="flex justify-between items-center mb-6">
                       <span className="text-2xl font-semibold">Total Amount:</span>
@@ -608,11 +607,10 @@ export default function App() {
               <p className="text-gray-600">Track your order history and status</p>
             </div>
             {orders.length === 0 ? (
-              <Card className="border-gray-100 shadow-sm">
+              <Card className="border-gray-100 shadow-sm bg-gray-200">
                 <CardContent className="p-16 text-center">
                   <div className="relative inline-block mb-6">
-                    <ShoppingBag className="h-20 w-20 mx-auto text-gray-300" />
-                    <div className="absolute -inset-2 bg-gray-100 rounded-full blur-xl"></div>
+                    <ShoppingBag className="h-20 w-20 mx-auto text-indigo-600" />
                   </div>
                   <h3 className="text-2xl font-semibold text-gray-700 mb-3">No orders yet</h3>
                   <p className="text-gray-500 mb-6">Start shopping to see your order history!</p>
@@ -627,7 +625,7 @@ export default function App() {
             ) : (
               <div className="space-y-6">
                 {orders.map(order => (
-                  <Card key={order.id} className="border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                  <Card key={order.id} className="border-gray-100 shadow-sm hover:shadow-md transition-shadow bg-gradient-to-br from-indigo-100 to-purple-100">
                     <CardHeader className="pb-4">
                       <div className="flex justify-between items-start">
                         <div>
