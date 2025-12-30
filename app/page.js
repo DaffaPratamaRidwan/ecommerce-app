@@ -326,7 +326,7 @@ export default function App() {
                     <User className="h-4 w-4 text-gray-600" />
                     <span className="text-sm font-medium text-gray-700">{user.name}</span>
                   </div>
-                  <Button variant="outline" size="sm" onClick={handleLogout} className="border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">
+                  <Button size="sm" onClick={handleLogout} className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all">
                     <LogOut className="h-4 w-4 mr-2" />
                     Logout
                   </Button>
@@ -431,8 +431,7 @@ export default function App() {
         {currentView === 'product-detail' && selectedProduct && (
           <div className="max-w-6xl mx-auto">
             <Button 
-              variant="outline" 
-              className="mb-6 border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all" 
+              className="mb-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all" 
               onClick={() => setCurrentView('products')}
             >
               ← Back to Products
