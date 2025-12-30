@@ -382,7 +382,7 @@ export default function App() {
             {/* Products Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredProducts.map(product => (
-                <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-gray-100 hover:border-indigo-200 overflow-hidden">
+                <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-gray-100 hover:border-indigo-200 overflow-hidden bg-white">
                   <div onClick={() => { setSelectedProduct(product); setCurrentView('product-detail'); }}>
                     <div className="relative overflow-hidden">
                       <img
@@ -398,14 +398,14 @@ export default function App() {
                     </div>
                     <CardHeader className="pb-3">
                       <CardTitle className="text-lg line-clamp-1 group-hover:text-indigo-600 transition-colors">{product.name}</CardTitle>
-                      <CardDescription className="line-clamp-2 text-white">{product.description}</CardDescription>
+                      <CardDescription className="line-clamp-2 text-gray-600">{product.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="pt-0">
                       <div className="flex items-center justify-between mb-3">
                         <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">${product.price}</span>
                         <div className="flex items-center space-x-1">
                           <span className="text-yellow-500">⭐</span>
-                          <span className="text-sm text-white">{product.rating}</span>
+                          <span className="text-sm text-gray-600">{product.rating}</span>
                         </div>
                       </div>
                       <div className="text-sm text-gray-500">
