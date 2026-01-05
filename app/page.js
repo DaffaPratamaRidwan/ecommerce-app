@@ -397,7 +397,7 @@ export default function App() {
                       </div>
                     </div>
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-lg line-clamp-1 group-hover:text-indigo-600 transition-colors">{product.name}</CardTitle>
+                      <CardTitle className="text-lg line-clamp-1 text-gray-400 group-hover:text-indigo-600 transition-colors">{product.name}</CardTitle>
                       <CardDescription className="line-clamp-2 text-gray-600">{product.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="pt-0">
@@ -532,7 +532,7 @@ export default function App() {
                           />
                         </div>
                         <div className="flex-1">
-                          <h3 className="font-semibold text-xl mb-1">{item.name}</h3>
+                          <h3 className="font-semibold text-xl mb-1 text-gray-300">{item.name}</h3>
                           <p className="text-2xl font-bold text-white">${item.price}</p>
                         </div>
                         <div className="flex items-center gap-3">
