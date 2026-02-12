@@ -283,58 +283,60 @@ export default function App() {
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-lg shadow-lg sticky top-0 z-50 border-b border-gray-100">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div 
               className="flex items-center space-x-3 cursor-pointer group"
               onClick={() => setCurrentView('products')}
             >
               <div className="relative">
-                <ShoppingBag className="h-9 w-9 text-indigo-600 group-hover:text-indigo-700 transition-colors" />
+                <ShoppingBag className="h-8 w-8 sm:h-9 sm:w-9 text-indigo-600 group-hover:text-indigo-700 transition-colors" />
                 <div className="absolute -inset-1 bg-indigo-600/20 rounded-lg blur-sm group-hover:bg-indigo-600/30 transition-colors"></div>
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Good Stuffs</h1>
-                <p className="text-xs text-gray-500">Premium Shopping Experience</p>
+                <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Good Stuffs</h1>
+                <p className="text-xs text-gray-500 hidden sm:block">Premium Shopping Experience</p>
               </div>
             </div>
             
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               {user ? (
                 <>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setCurrentView('orders')}
-                    className="text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all"
+                    className="text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all px-2 sm:px-3 text-xs sm:text-sm"
                   >
-                    My Orders
+                    <span className="hidden sm:inline">My Orders</span>
+                    <span className="sm:hidden">Orders</span>
                   </Button>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="relative hover:bg-indigo-50 transition-all"
+                    className="relative hover:bg-indigo-50 transition-all h-8 w-8 sm:h-10 sm:w-10"
                     onClick={() => setCurrentView('cart')}
                   >
-                    <ShoppingCart className="h-5 w-5 text-gray-600 group-hover:text-indigo-600" />
+                    <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5 text-gray-600 group-hover:text-indigo-600" />
                     {cart.items.length > 0 && (
-                      <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-0">
+                      <Badge className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 h-4 w-4 sm:h-5 sm:w-5 p-0 flex items-center justify-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-0 text-xs">
                         {cart.items.length}
                       </Badge>
                     )}
                   </Button>
-                  <div className="flex items-center space-x-2 px-3 py-2 bg-gray-50 rounded-full">
+                  <div className="hidden sm:flex items-center space-x-2 px-3 py-2 bg-gray-50 rounded-full">
                     <User className="h-4 w-4 text-gray-600" />
                     <span className="text-sm font-medium text-gray-700">{user.name}</span>
                   </div>
-                  <Button size="sm" onClick={handleLogout} className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all">
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Logout
+                  <Button size="sm" onClick={handleLogout} className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all px-2 sm:px-3 text-xs sm:text-sm">
+                    <LogOut className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                    <span className="hidden sm:inline">Logout</span>
+                    <span className="sm:hidden">Out</span>
                   </Button>
                 </>
               ) : (
                 <Button 
                   onClick={() => { setAuthMode('login'); setShowAuthDialog(true); }}
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all"
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all px-3 sm:px-4 py-2 text-sm"
                 >
                   Login / Register
                 </Button>
@@ -349,24 +351,24 @@ export default function App() {
         {currentView === 'products' && (
           <div>
             {/* Search and Filter */}
-            <div className="mb-8 space-y-6">
+            <div className="mb-6 sm:mb-8 space-y-4 sm:space-y-6">
               <div className="relative max-w-2xl mx-auto">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
                 <Input
                   type="text"
-                  placeholder="Search for amazing products..."
-                  className="pl-12 py-4 text-lg border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 rounded-full shadow-sm"
+                  placeholder="Search products..."
+                  className="pl-10 sm:pl-12 py-3 sm:py-4 text-base sm:text-lg border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 rounded-full shadow-sm"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
               
-              <div className="flex gap-3 flex-wrap justify-center">
+              <div className="flex gap-2 sm:gap-3 flex-wrap justify-center">
                 {categories.map(category => (
                   <Badge
                     key={category}
                     variant={selectedCategory === category ? 'default' : 'outline'}
-                    className={`cursor-pointer px-5 py-2 text-sm font-medium transition-all ${
+                    className={`cursor-pointer px-3 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm font-medium transition-all ${
                       selectedCategory === category 
                         ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-0 shadow-md' 
                         : 'border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 text-black'
@@ -380,7 +382,7 @@ export default function App() {
             </div>
 
             {/* Products Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               {filteredProducts.map(product => (
                 <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-gray-100 hover:border-indigo-200 overflow-hidden bg-white">
                   <div onClick={() => { setSelectedProduct(product); setCurrentView('product-detail'); }}>
@@ -388,38 +390,39 @@ export default function App() {
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-40 sm:h-48 md:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                      <div className="absolute top-3 right-3">
-                        <Badge className="bg-white/90 text-gray-700 border-0 shadow-sm">
+                      <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
+                        <Badge className="bg-white/90 text-gray-700 border-0 shadow-sm text-xs">
                           {product.category}
                         </Badge>
                       </div>
                     </div>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-lg line-clamp-1 text-gray-400 group-hover:text-indigo-600 transition-colors">{product.name}</CardTitle>
-                      <CardDescription className="line-clamp-2 text-gray-600">{product.description}</CardDescription>
+                    <CardHeader className="pb-2 sm:pb-3">
+                      <CardTitle className="text-sm sm:text-base lg:text-lg line-clamp-1 text-gray-400 group-hover:text-indigo-600 transition-colors">{product.name}</CardTitle>
+                      <CardDescription className="line-clamp-1 sm:line-clamp-2 text-gray-600 text-xs sm:text-sm">{product.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="pt-0">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">${product.price}</span>
+                      <div className="flex items-center justify-between mb-2 sm:mb-3">
+                        <span className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">${product.price}</span>
                         <div className="flex items-center space-x-1">
-                          <span className="text-yellow-500">⭐</span>
-                          <span className="text-sm text-gray-600">{product.rating}</span>
+                          <span className="text-yellow-500 text-xs sm:text-sm">⭐</span>
+                          <span className="text-xs sm:text-sm text-gray-600">{product.rating}</span>
                         </div>
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-xs sm:text-sm text-gray-500">
                         Stock: <span className={`font-medium ${product.stock < 10 ? 'text-red-500' : 'text-green-500'}`}>{product.stock}</span> units
                       </div>
                     </CardContent>
                   </div>
                   <CardFooter className="pt-0">
                     <Button 
-                      className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all" 
+                      className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all text-xs sm:text-sm py-2 sm:py-3" 
                       onClick={() => addToCart(product)}
                     >
-                      <ShoppingCart className="mr-2 h-4 w-4" />
-                      Add to Cart
+                      <ShoppingCart className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                      <span className="hidden sm:inline">Add to Cart</span>
+                      <span className="sm:hidden">Add</span>
                     </Button>
                   </CardFooter>
                 </Card>
@@ -429,47 +432,47 @@ export default function App() {
         )}
 
         {currentView === 'product-detail' && selectedProduct && (
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto px-2 sm:px-0">
             <Button 
-              className="mb-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all" 
+              className="mb-4 sm:mb-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all text-sm sm:text-base" 
               onClick={() => setCurrentView('products')}
             >
               ← Back to Products
             </Button>
             <Card className="overflow-hidden border-gray-100 shadow-lg bg-gradient-to-br from-indigo-200 to-purple-600">
-              <div className="grid md:grid-cols-2 gap-8 p-8">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-8 p-4 sm:p-8">
                 <div>
                   <div className="relative overflow-hidden rounded-lg">
                     <img
                       src={selectedProduct.image}
                       alt={selectedProduct.name}
-                      className="w-full h-96 object-cover"
+                      className="w-full h-64 sm:h-80 md:h-96 object-cover"
                     />
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-white/90 text-gray-700 border-0 shadow-sm">
+                    <div className="absolute top-2 left-2 sm:top-4 sm:left-4">
+                      <Badge className="bg-white/90 text-gray-700 border-0 shadow-sm text-xs">
                         {selectedProduct.category}
                       </Badge>
                     </div>
                   </div>
                 </div>
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   <div>
-                    <h1 className="text-4xl font-bold mb-4 text-white">{selectedProduct.name}</h1>
-                    <div className="flex items-center space-x-4 mb-4">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-white">{selectedProduct.name}</h1>
+                    <div className="flex items-center space-x-3 sm:space-x-4 mb-3 sm:mb-4">
                       <div className="flex items-center space-x-1">
-                        <span className="text-yellow-500 text-lg">⭐</span>
-                        <span className="text-lg font-semibold text-white">{selectedProduct.rating}</span>
+                        <span className="text-yellow-500 text-sm sm:text-lg">⭐</span>
+                        <span className="text-sm sm:text-lg font-semibold text-white">{selectedProduct.rating}</span>
                       </div>
                       <span className="text-gray-400">|</span>
-                      <span className="text-white">{selectedProduct.category}</span>
+                      <span className="text-white text-sm sm:text-base">{selectedProduct.category}</span>
                     </div>
-                    <p className="text-white text-lg leading-relaxed">{selectedProduct.description}</p>
+                    <p className="text-white text-sm sm:text-base lg:text-lg leading-relaxed">{selectedProduct.description}</p>
                   </div>
                   
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     <div className="flex items-baseline space-x-2">
-                      <span className="text-5xl font-bold text-white">${selectedProduct.price}</span>
-                      <span className="text-white">USD</span>
+                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">${selectedProduct.price}</span>
+                      <span className="text-white text-sm sm:text-base">USD</span>
                     </div>
                     
                     <div className="space-y-2">
@@ -497,73 +500,76 @@ export default function App() {
         )}
 
         {currentView === 'cart' && (
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-8">
-              <h2 className="text-4xl font-bold mb-2 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Shopping Cart</h2>
-              <p className="text-gray-600">Review your items before checkout</p>
+          <div className="max-w-4xl mx-auto px-2 sm:px-0">
+            <div className="mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Shopping Cart</h2>
+              <p className="text-gray-600 text-sm sm:text-base">Review your items before checkout</p>
             </div>
             {cart.items.length === 0 ? (
               <Card className="border-gray-100 shadow-sm bg-gray-200">
-                <CardContent className="p-16 text-center">
-                  <div className="relative inline-block mb-6">
-                    <ShoppingCart className="h-20 w-20 mx-auto text-indigo-600" />
+                <CardContent className="p-8 sm:p-16 text-center">
+                  <div className="relative inline-block mb-4 sm:mb-6">
+                    <ShoppingCart className="h-16 w-16 sm:h-20 sm:w-20 mx-auto text-indigo-600" />
                   </div>
-                  <h3 className="text-2xl font-semibold text-gray-700 mb-3">Your cart is empty</h3>
-                  <p className="text-gray-500 mb-6">Add some amazing products to get started!</p>
+                  <h3 className="text-xl sm:text-2xl font-semibold text-gray-700 mb-3">Your cart is empty</h3>
+                  <p className="text-gray-500 mb-4 sm:mb-6 text-sm sm:text-base">Add some amazing products to get started!</p>
                   <Button 
                     onClick={() => setCurrentView('products')}
-                    className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all"
+                    className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base"
                   >
                     Continue Shopping
                   </Button>
                 </CardContent>
               </Card>
             ) : (
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {cart.items.map(item => (
                   <Card key={item.productId} className="overflow-hidden border-gray-100 shadow-lg bg-gradient-to-br from-indigo-200 to-purple-600">
-                    <CardContent className="p-6">
-                      <div className="flex items-center gap-6">
+                    <CardContent className="p-4 sm:p-6">
+                      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
                         <div className="relative overflow-hidden rounded-lg">
                           <img
                             src={item.image}
                             alt={item.name}
-                            className="w-28 h-28 object-cover"
+                            className="w-20 h-20 sm:w-28 sm:h-28 object-cover"
                           />
                         </div>
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-xl mb-1 text-gray-300">{item.name}</h3>
-                          <p className="text-2xl font-bold text-white">${item.price}</p>
+                        <div className="flex-1 text-center sm:text-left">
+                          <h3 className="font-semibold text-base sm:text-xl mb-1 text-gray-300">{item.name}</h3>
+                          <p className="text-lg sm:text-2xl font-bold text-white">${item.price}</p>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="border-gray-300 bg-white hover:border-gray-400 hover:bg-gray-50 transition-all"
-                            onClick={() => updateCartQuantity(item.productId, item.quantity - 1)}
-                          >
-                            <Minus className="h-4 w-4 text-black" />
-                          </Button>
-                          <span className="w-16 text-center font-semibold text-lg">{item.quantity}</span>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="border-gray-300 bg-white hover:border-gray-400 hover:bg-gray-50 transition-all"
-                            onClick={() => updateCartQuantity(item.productId, item.quantity + 1)}
-                          >
-                            <Plus className="h-4 w-4 text-black" />
-                          </Button>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-bold text-2xl mb-2 text-white">${(item.price * item.quantity).toFixed(2)}</p>
-                          <Button
-                            variant="ghost"
-                            className="text-red-500 hover:text-red-600 hover:bg-red-50 transition-all px-3 py-2"
-                            onClick={() => removeFromCart(item.productId)}
-                          >
-                            <Trash2 className="h-4 w-4 mr-1" />
-                            Remove
-                          </Button>
+                        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                          <div className="flex items-center gap-2 sm:gap-3">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="border-gray-300 bg-white hover:border-gray-400 hover:bg-gray-50 transition-all h-8 w-8 sm:h-10 sm:w-10"
+                              onClick={() => updateCartQuantity(item.productId, item.quantity - 1)}
+                            >
+                              <Minus className="h-3 w-3 sm:h-4 sm:w-4 text-black" />
+                            </Button>
+                            <span className="w-12 sm:w-16 text-center font-semibold text-base sm:text-lg">{item.quantity}</span>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="border-gray-300 bg-white hover:border-gray-400 hover:bg-gray-50 transition-all h-8 w-8 sm:h-10 sm:w-10"
+                              onClick={() => updateCartQuantity(item.productId, item.quantity + 1)}
+                            >
+                              <Plus className="h-3 w-3 sm:h-4 sm:w-4 text-black" />
+                            </Button>
+                          </div>
+                          <div className="text-center sm:text-right">
+                            <p className="font-bold text-lg sm:text-2xl mb-2 text-white">${(item.price * item.quantity).toFixed(2)}</p>
+                            <Button
+                              variant="ghost"
+                              className="text-red-500 hover:text-red-600 hover:bg-red-50 transition-all px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-sm"
+                              onClick={() => removeFromCart(item.productId)}
+                            >
+                              <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                              <span className="hidden sm:inline">Remove</span>
+                              <span className="sm:hidden">Del</span>
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </CardContent>
